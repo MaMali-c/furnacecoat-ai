@@ -1,0 +1,4 @@
+import type {Project} from '../domain/types';
+import {materials} from '../data/materials';
+export function downloadBlob(data:Blob,filename:string){const url=URL.createObjectURL(data);const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+export function exportProject(project:Project){downloadBlob(new Blob([JSON.stringify({notice:'DEMO / NOT VALIDATED. Not an engineering certification.',project,materials:materials.filter(m=>project.layers.some(l=>l.materialId===m.id)),assumptions:['Fixed illustrative thermal fixtures; no validated heat-transfer model.','Sample materials are fictional and unverified.','No optimization or machine learning has been performed.']},null,2)],{type:'application/json'}),project.reference+'-demo-report.json')}
